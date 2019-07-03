@@ -35,7 +35,7 @@ Let us assume, we have some microservices up and running. Our system need to hav
     This script will find the 'WEBSITE' in 'application_list.yaml' file and call related healthCheck API of this microservices and save the response in database (please check config.txt file for db credential). Thus you are regularly collecting api response in database table named 'daily_nagios_check'.
     Sample database table dump 'daily_nagios_check.sql.tar.gz' provided here for convenience. You can load the uncompressed file in a Postgres database.
 
-    3. Now, we need to get data from the postgres table and create/refresh necessary node and links in the adapted D3 graph. This is done by 'generate_node_link.py'. It ran every 3 minutes, managed by CRON and reflects the latest update in graph.
+    3. Now, we need to get data from the postgres table and create/refresh necessary node and links in the adapted D3 graph. This is done by 'generate_node_link.py'. It ran every 3 minutes, managed by CRON and reflects the latest update in graph. It actually updates the nodes and links file and their colours based on the reachability (green for OK, red for broken).
 
     4. Please open the index.html file with any browser and visualize the dependency live. If any dependency is OK the colour is green, else read.
 
