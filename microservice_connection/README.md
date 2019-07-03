@@ -1,8 +1,11 @@
 When a system is consist of some microservices, it is important to check if all alive and best if we can visualize it, live (in few minutes). The brief idea is - each micro-service would have two api(s) - ping and healthCheck. 
 
 ping api of a micro-service says - I am OK.
-healthcheck api of a micro-service shows the status of all dependent micro-service(s). The dependency is part of the healthCheck api development. So, PINT api is actually part of healthCheck api. Both API response in json format. On regular interval we call healthCheck API and store the response in a postgres database. From database we parse the response and render d3 data and graph files. 
-Please note that - API development is not part of this project.
+healthcheck api of a micro-service shows the status of all dependent micro-service(s), example given below. 
+The dependency is part of the healthCheck api development. (Later you will obvserve that in this structure PING api is actually part of healthCheck api). 
+
+Both API response in json format. On regular interval we call healthCheck API and store the response in a postgres database. From database we parse the response and render d3 data and graph files. 
+Please note that - API development is not part of this project. We just did the later part (store response in DB and render d3 graphs from there). Automation done in python scripts.
 
 For quick view please open the index.html file with your browser. The index.html file should be viewed as the image microservice_connection_check.png
 
