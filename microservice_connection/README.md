@@ -12,7 +12,20 @@ Let us assume, we have some microservices up and running. Our system need to hav
             this will return status code 200
 
          b) /healthCheck
-          that will return status code 200
+          that will return status code 200 
+          example : http://myapp.mydomain.com/api/healthCheck 
+          json response :  { 
+                 "error": true, 
+                 "message": "ERROR", 
+                 "status": { 
+                   "CORE_API": "YES", 
+                   "BILLING": "NO", 
+                   "NAVIGATOR": "YES", 
+                   "CARROTCAKE": "YES" 
+                 } 
+               }  
+
+   It means the 'myapp' microservice depends on the CORE_API microservice. So it called http://CORE_API.mydomain.com/api/ping and found OK. same for other dependent microservices . Finally prepared the json response. Here we see - the 'myapp' microservice received error from "BILLING". So, it made the overall response "ERROR
 
     2. A python script 'check_th_service_health', will run regularly like every 3 min, may be managed by CRON (We ran it as Nagios monitoring plugin in 3 min interval).
     Example : python check_th_service_health WEBSITE  
@@ -25,3 +38,4 @@ Let us assume, we have some microservices up and running. Our system need to hav
     4. Please open the index.html file with any browser and visualize the dependency live. If any dependency is OK the colour is green, else read.
 
 Note : please install the necessary python libraries.  I could not find time to make a pip requirement file. 
+
