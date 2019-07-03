@@ -1,0 +1,21 @@
+[ 
+ { "name": "BILLING", "id": 0 } ,
+ { "name": "CORE_API", "id": 1 } ,
+ { "name": "GBE", "id": 2 } ,
+ { "name": "CARROT_CAKE", "id": 3 } ,
+ { "name": "TIMS", "id": 4 } ,
+ { "name": "GOOGLE_SPREADSHEET", "id": 5 } ,
+ { "name": "GOOGLE_API", "id": 6 } ,
+ { "name": "DOCTOR_CHAT", "id": 7 } ,
+ { "name": "CONCEPT_MANAGER", "id": 8 } ,
+ { "name": "NAVIGATOR", "id": 9 } ,
+ { "name": "CAAS", "id": 10 } ,
+ { "name": "MOVER_BACKEND", "id": 11 } ,
+ { "name": "SALES_FORCE", "id": 12 } ,
+ { "name": "SALESFORCE", "id": 13 } ,
+ { "name": "TONICAPP_BACKEND", "id": 14 } ,
+ { "name": "Tonic-Cloud-Carrotcake", "id": 15 } ,
+ { "name": "DR_APPOINTMENT", "id": 16 } ,
+ { "name": "WEBSITE", "id": 17 } ,
+ { "name": "Q_AND_A", "id": 18 } 
+]

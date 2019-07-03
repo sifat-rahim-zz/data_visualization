@@ -1,0 +1,140 @@
+#!/usr/bin/env python
+
+# Author : hello_sifat@yahoo.com
+# Date : 17, July 2017
+# This scripts checks if micro_services are alive or not,
+# Program Input (must) : This script needs an input file 'application_list.yaml'
+
+# How to check this script : python check_th_service_health_new CARROT_CAKE
+
+import requests  # if not installed: sudo pip install requests
+import socket
+import yaml     # if not installed: sudo pip install PyYAML
+import sys
+import json
+import psycopg2
+import psycopg2.extras
+from datetime import datetime
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+
+
+db = 'local_postgres'
+
+try :
+    fp = open('config.txt','r')
+
+    config_dict = json.load(fp)
+
+    host        = config_dict[db]['host']
+    db_name     = config_dict[db]['db_name']
+    user        = config_dict[db]['user']
+    password    = config_dict[db]['password']
+except Exception, e:
+    print str(e)
+    print "CRITICAL - !!ERROR!!, config file load ERROR!!.. exiting program.."
+    sys.exit(2)
+
+conn_string = "host='{host}' dbname='{db_name}' user='{user}' password='{password}'".format(host=host,db_name=db_name,user=user,password=password)
+conn = psycopg2.connect(conn_string)
+cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+
+def api_response_check_json(url, field='error', headers=None, runbook='Not-available') :
+    print url, field
+    dt = datetime.now()
+    msg_append = ''
+    try :
+        import pdb;
+	r = requests.get(url, headers=headers, verify=False)   # dir(r) as full response object
+        #r_dict = requests.get(url, headers=headers, verify=False).json() #; print r_dict, r_dict[field]
+        status_code = r.status_code  # int type
+        response_time_sec = r.elapsed.total_seconds() # float type
+        r_dict = r.json() #.encode('ascii','ignore')
+        r_dict['status_code'] = status_code
+        r_dict['response_time_sec'] = response_time_sec
+        r_dict['runbook'] = runbook
+
+        #print r_dict, type(r_dict) ; sys.exit(0)
+
+        field_value = str( r_dict[field] )   # if this field exists, means we have json data
+
+        #msg_append += field + ":" + field_value + ", status_code=" + str(status_code) + ", response_time=" + str(response_time_sec) #; print msg_append
+        msg_append += " Response : " + str(r_dict)
+
+        # Inserting data into daily_nagios_check (an additional work)
+        try :
+            sql_str = "INSERT INTO daily_nagios_check VALUES ( '{report_datetime}', '{service_name}', '{info_json_str}' ) ;".format(report_datetime=dt, service_name=curr_app ,info_json_str=json.dumps(r_dict) )
+            cursor.execute(sql_str)
+            conn.commit()
+        except Exception, e:
+            print str(e) , " May be duplicate, Could not enter row for : ", dt
+        finally :
+            cursor.close()
+
+
+        if field_value.upper() == 'ERROR' :
+            print " CRITICAL - ", msg_append
+            sys.exit(2)
+        elif field_value.upper() == 'OK' :
+            print " OK - ", msg_append
+            sys.exit(0)
+        else :
+            print " WARNING - status UNKNOWN ",msg_append
+            sys.exit(1)
+
+    except Exception, e:
+            sql_str = '''INSERT INTO daily_nagios_check VALUES ( '{report_datetime}', '{service_name}', '{{ "error": true, "message": "ERROR", "status_code": 503, "response_time_sec": 999, "status":"{{}}" }}' ) ;'''.format(report_datetime=dt, service_name=curr_app )
+            #sql_str = '''INSERT INTO daily_nagios_check VALUES ( '{report_datetime}', '{service_name}', '{"error": true, "message": "ERROR", "status_code": 503, "response_time_sec": 999, "status":"{}" ) ;'''.format(report_datetime=dt, service_name=curr_app )
+            cursor.execute(sql_str)
+            conn.commit()
+            print " CRITICAL - Getting Exception", msg_append, str(e)
+            sys.exit(2)
+
+
+
+
+if __name__ == '__main__':
+
+    curr_app = sys.argv[1]
+
+    f_obj = open('/usr/local/nagios/libexec/application_list.yaml','r')
+    app_list = yaml.load(f_obj)
+
+    for i in app_list['applications']:  # i -> app name like "Subscription Manager" or "My Tonic" etc.
+        if curr_app == i:
+            url = app_list['applications'][i]["url"]
+            check_method = app_list['applications'][i]["check_method"]
+            runbook = app_list['applications'][i]["runbook"] if 'runbook' in app_list['applications'][i].keys() else 'Not-available'
+            #runbook = app_list['applications'][i].get("runbook","Not-available")
+            #print type(app_list['applications'][i]), app_list['applications'][i].keys()
+
+            if check_method == 'api_response_check_json':
+                json_attribute_name = app_list['applications'][i]['json_attribute']
+                headers=None
+
+                if curr_app == 'Tonic-core-api-prev':
+                    headers = {'content-type': 'application/json','Authorization': app_list['applications'][i]['Authorization'] }
+                    msg_append = api_response_check_json(url,field=json_attribute_name,headers=headers)
+                    #print msg_append
+                else:  # for others
+                    api_response_check_json(url,field=json_attribute_name,headers=headers,runbook=runbook)
+                    #msg_append = api_response_check_json(url,field=json_attribute_name,headers=headers)
+                    #print 'KKK', msg_append
+
+
+            else:
+                sys.exit('ERROR!! Plz define f() according to check_method')
+
+
+        #else :
+        #    print "CRITICAL - " + sys.argv[1] + " is NOT RESPONDING"
+        #    sys.exit(2)
+
+        '''
+        Related sql :
+        CREATE TABLE daily_nagios_check ( day_date_time timestamp without time zone, service_name VARCHAR(50), info jsonb ) ;
+        ALTER TABLE daily_nagios_check add constraint uniq_day_datetime  UNIQUE (day_date_time) ;
+        SELECT info #>> '{status_code}' from daily_nagios_check where date(day_date_time)='2017-07-18';
+        '''
