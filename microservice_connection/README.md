@@ -12,19 +12,23 @@ Let us assume, we have some microservices up and running. Our system need to hav
          a) /ping
             If this micorservice itself is OK
             this will return status code 200
+            json response : 
+            {"error":false,"message":"OK"}
 
          b) /healthCheck
           that will return status code 200 
           example : http://myapp.mydomain.com/api/healthCheck 
-          json response :  { 
+          json response :  
+               { 
                  "error": true, 
                  "message": "ERROR", 
-                 "status": { 
+                 "status": 
+                  { 
                    "CORE_API": "YES", 
                    "BILLING": "NO", 
                    "NAVIGATOR": "YES", 
                    "CARROTCAKE": "YES" 
-                 } 
+                  } 
                }  
 
    It means the 'myapp' microservice depends on the CORE_API microservice. So it called http://CORE_API.mydomain.com/api/ping and found OK. same for other dependent microservices . Finally prepared the json response. Here we see - the 'myapp' microservice received error from "BILLING". So, it made the overall response "ERROR
