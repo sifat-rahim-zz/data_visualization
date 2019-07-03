@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tonic Partners map</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css" />
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css" />
+
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+     <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js'></script>
+    <!-- <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.js'> </script> -->
+    <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js'></script>
+  </head>
+
+  <body>
+    <h1>Tonic Partners Geo-Map [Draft]</h1>
+    <img src="maps/images/hospital_24_24.png" alt="Smiley face" height="24" width="24"> Hospital [Total : 7] <br />
+    <img src="maps/images/diagnostic_24_24.png" alt="Smiley face" height="24" width="24"> Diagnostics [Total : 8]<br />
+    <img src="maps/images/pharmacy_24_24.png" alt="Smiley face" height="24" width="24"> Pharmacy [Total : 8]<br />
+    <br />
+
+    <div id="map" style="width: 800px; height: 500px; border: 1px solid #AAA;"></div>
+    <!-- <div id="map" style="width: 60%; height: 80%; border: 1px solid #AAA;"></div> -->
+
+    <script type='text/javascript' src='maps/markers_hospital.js'></script>
+    <script type='text/javascript' src='maps/markers_diagnostic.js'></script>
+    <script type='text/javascript' src='maps/markers_pharmacy.js'></script>
+    <script type='text/javascript' src='maps/leaf-demo.js'></script>
+  </body>
+</html>
