@@ -1,5 +1,6 @@
+For quick view please open the index.html file with your browser. The index.html file should be viewed as the image microservice_connection_check.png
+
 When a system is consist of some microservices, it is important to check if all alive and best if we can visualize it, live (in few minutes).
-The index.html file should be viewed as the image microservice_connection_check.png
 
 Summary :
 
@@ -23,4 +24,4 @@ Let us assume, we have some microservices up and running. Our system need to hav
 
     4. Please open the index.html file with any browser and visualize the dependency live. If any dependency is OK the colour is green, else read.
 
-Note : please install the necessary python libraries. 
+Note : please install the necessary python libraries.  I could not find time to make a pip requirement file. 
