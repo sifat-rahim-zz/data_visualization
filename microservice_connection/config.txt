@@ -1,0 +1,10 @@
+{
+
+   "local_postgres" : {
+   "db_name"  : "my_db",
+   "host"     : "localhost",
+   "user"     : "my_user",
+   "password" : "my_pass"
+   }
+
+}
