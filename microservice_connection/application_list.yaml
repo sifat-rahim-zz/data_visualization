@@ -1,0 +1,97 @@
+applications:
+    "WEBSITE":
+        url: "http://mytonic.com/api/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message
+
+    "SALESFORCE":
+        url: "https://salesforce.mytonic.com/api/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message
+
+    "Subscription Manager":
+        url: "http://52.76.245.179:5005/subscription/api/isServiceHour"
+        check_method: http_response_status_code
+
+    "CARROT_CAKE":
+        url: "https://carrotcake.mytonic.com/api/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message
+
+    "CONCEPT_MANAGER":
+        url: "https://cm.mytonic.com/api/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message
+
+    "Qanda":
+        url: "http://mytonic.com/api/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message
+
+    "Postgres":
+        url: "http://52.76.245.179:5005/subscription/api/castro/getAllTonicMembers?start=1&limit=2"
+        check_method: http_response_status_code
+
+    "Jumpbox":
+        url: "52.76.245.179:22"
+        check_method: tcp_socket_check
+
+    "NAVIGATOR":
+        url: "https://navigator.mytonic.com/api/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message
+
+    "Billing":
+        url: "http://payment.mytonic.com:8080/api/v1/billing"
+        check_method: api_response_check_json
+        json_attribute: error
+
+    "TIMS":
+        url: "https://tims.mytonic.com/api/healthCheck/"
+        check_method: api_response_check_json
+        json_attribute: message
+
+    "TONICAPP_BACKEND":
+        url: "http://tonicapp.mytonic.com/api/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message
+        runbook: 'http://wiki.mytonic.com/pages/viewpage.action?pageId=89096314'
+
+    "BILLING":
+        url: "https://payment.mytonic.com/api/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message
+        runbook: 'http://wiki.mytonic.com/pages/viewpage.action?pageId=89096314'
+
+    "Tonic-app":
+        url: "http://dev-tonicapp.mytonic.com/api/ping"
+        check_method: api_response_check_json
+        json_attribute: time
+
+    "mytonic":
+        url: "http://mytonic.com"
+        check_method: http_response_status_code
+
+    "wiki-mytonic":
+        url: "http://wiki.mytonic.com"
+        check_method: http_response_status_code
+
+    "MOVER_BACKEND":
+        url: "https://moverv2.mytonic.com/noauth/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message
+
+    "CLOUD_PAYMENT":
+        url: "https://cloud-payment.mytonic.com/api/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message
+
+    "Tonic-Cloud-Core-Api":
+        url: "https://cloud-api.mytonic.com/api/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message
+
+    "Tonic-Cloud-Carrotcake":
+        url: "https://cloud-carrotcake.mytonic.com/api/healthCheck"
+        check_method: api_response_check_json
+        json_attribute: message

@@ -126,7 +126,7 @@ if __name__ == '__main__' :
         #print i, sql_str #; sys.exit(0)
         res_str = exec_sql_general(sql_str)
 
-        dict_tmp = json.loads(res_str[0][0])  # sample dict_tmp for CASTRO is {"CAAS": "YES", "TH_SMSC": "YES", "CORE_API": "YES", "TONICAPP_BACKEND": "YES"}
+        dict_tmp = json.loads(res_str[0][0])  # sample dict_tmp for CAAS is {"CAAS": "YES", "TH_SMSC": "YES", "CORE_API": "YES", "TONICAPP_BACKEND": "YES"}
         #print i, 'kk', dict_tmp #; sys.exit(0)
         for j in dict_tmp.keys(): # j is dependency-microservice
             curr_str = i + '---' + j.encode('ascii','ignore') + '---' + dict_tmp[j]
